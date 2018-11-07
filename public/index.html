@@ -40,32 +40,25 @@
       </section>
 
       <section id = "comment-section">
-        <article>
-          <div class = "comment-header">
-            <img src = "./images/profpic.jpeg" alt = "profile-pic">
-            <h2>Handle Name</h2>
-            <p>@handleName</p>
-          </div>
-
-          <div class = "text-container">
-            <p>Comment here</p>
-          </div>
-
-          <div class = "comment-footer">
-            <p>10 days ago</p>
-            <i class = "fab fa-font-awesome-flag"></i>
-            <i class = "fas fa-retweet"></i>
-            <i class = "fas fa-heart"></i>
-          </div>
-
-        </article>
       </section>
+
     </main>
 
 
     <!-- App JS -->
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
-
+    <script>
+      $('form.twitter-form').submit(function (event) {
+        event.preventDefault();
+        console.log("test");
+        console.log($(this));
+        $.ajax({
+          type: 'POST',
+          url: 'http://localhost:8080/tweets',
+          data: $(this).serialize(),
+        });
+      });
+    </script>
   </body>
 </html>

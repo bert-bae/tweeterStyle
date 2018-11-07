@@ -51,11 +51,44 @@ const tweetData = [
   }
 ];
 
-let createTweetElement = function (data) {
+let loadTweets = () => {
+  let $data = $('form.twitter-form');
+  $data.on('click', function () {
+    console.log("testing the GET request");
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:8080/tweets',
+      success: function () {
+
+      }
+    });
+  });
+};
+
+loadTweets();
+
+let createTweetElement = (data) => {
+
   let user = data.user;
   let content = data.content;
-  let dateCreated = ((Date.now() - data.created_at) / 86400000).toFixed(0) + " days ago.";
-  function createCommentHeader () {
+  let dateCreated;
+
+  const pluralizeText = () => {
+    let time = ((Date.now() - data.created_at) / 86400000).toFixed(0);
+
+    if (time > 1 ) {
+      dateCreated = time + " days ago.";
+    }
+    if (time === 1) {
+      dateCreated = time + " day.";
+    }
+    if (time < 1) {
+      dateCreated = "Less than 1 day.";
+    }
+  };
+  pluralizeText();
+
+  const createCommentHeader = () => {
     let commentHeader =
     $('<div>').addClass('comment-header').append(
       $('<img>').attr('src', user.avatars.regular),
@@ -63,12 +96,12 @@ let createTweetElement = function (data) {
       $('<p>').text(user.handle)
     );
     return commentHeader;
-  }
-  function createTextContainer () {
+  };
+  const createTextContainer = () => {
     let textContainer = $('<div>').addClass('text-container').append($('<p>').text(content.text));
     return textContainer;
-  }
-  function createCommentFooter () {
+  };
+  const createCommentFooter = () => {
     let commentFooter =
     $('<div>').addClass('comment-footer').append(
       $('<p>').text(dateCreated),
@@ -77,7 +110,7 @@ let createTweetElement = function (data) {
       $('<i>').addClass("fas fa-heart")
     );
     return commentFooter;
-  }
+  };
 
   $('section#comment-section').append($('<article>').append(
     createCommentHeader(),
@@ -86,7 +119,7 @@ let createTweetElement = function (data) {
   ));
 };
 
-let renderTweets = function (data) {
+let renderTweets = (data) => {
   tweetData.forEach(tweet => {
     createTweetElement(tweet);
   });
