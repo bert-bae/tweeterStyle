@@ -9,6 +9,9 @@ $(document).ready(function() {
       });
       maxCount = count - length;
     } else {
+      $(this).siblings('span.counter').css({
+        "color": "black",
+      });
       maxCount = count - length;
     }
     $('span.counter').text(maxCount);

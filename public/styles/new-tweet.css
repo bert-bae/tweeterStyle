@@ -22,3 +22,16 @@ span.counter {
   float: right;
   font-style: italic;
 }
+
+section.new-tweet p {
+  background-color: #f72e2e;
+  border-radius: 0.5em;
+  padding: 0.2em;
+  margin-top: 0.2em;
+  color: #ffd630;
+  font-size: small;
+  font-weight: bold;
+  text-align: center;
+  display: none;
+  width: 100%;
+}

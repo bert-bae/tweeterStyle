@@ -26,6 +26,10 @@
     <nav id="nav-bar">
       <img class="logo" src="/images/bird.png">
       <span class="header">Tweeter</span>
+      <span class = "create-comment">
+        <i class="far fa-edit"></i>
+        <p>Compose</p>
+      </span>
     </nav>
 
     <!-- Page-specific (main) content here -->
@@ -36,6 +40,7 @@
           <textarea id = "submit-tweet" name="text" placeholder="What are you humming about?"></textarea>
           <input class = "tweet-submit" type="submit" value="Tweet" placeholder>
           <span class="counter">140</span>
+          <p></p>
         </form>
       </section>
 
@@ -48,15 +53,5 @@
     <!-- App JS -->
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
-    <script>
-      $('form.twitter-form').submit(function (event) {
-        event.preventDefault();
-        $.ajax({
-          type: 'POST',
-          url: 'http://localhost:8080/tweets',
-          data: $(this).serialize(),
-        });
-      });
-    </script>
   </body>
 </html>
