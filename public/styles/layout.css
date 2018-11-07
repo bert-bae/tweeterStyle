@@ -28,9 +28,14 @@ main.container {
   margin: 0 auto;
   background-color: white;
   padding-top: 100px;
-  padding-bottom: 1em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-bottom: 0.5em;
 }
 
+p {
+  margin: 0;
+}
 /*
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */

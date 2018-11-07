@@ -1,11 +1,11 @@
-h2 {
+.new-tweet h2 {
   font-weight: bold;
   border-bottom: black solid 0.05em;
   margin-block-end: 0.83em;
   margin-block-start: 0em;
 }
 
-textarea {
+.new-tweet textarea {
   overflow: auto;
   width: 100%;
   padding: 0.5em;
@@ -13,13 +13,12 @@ textarea {
 
 section.new-tweet {
   background-color: #eee;
-  border: black solid 0.05em;
+  border: #156d8a solid 0.05em;
   border-radius: 0.5em;
   padding: 1em;
-  margin: 0 1.5em 0 1.5em;
 }
 
 span.counter {
-    float: right;
-    font-style: italic;
+  float: right;
+  font-style: italic;
 }

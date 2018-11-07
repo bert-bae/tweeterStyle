@@ -5,8 +5,10 @@
     <title>Tweeter - Home Page</title>
 
     <!-- External CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/tweet-comment.css" type="text/css" />
     <link rel="stylesheet" href="/styles/new-tweet.css" type="text/css" />
 
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,700,700i" rel="stylesheet">
@@ -36,7 +38,30 @@
           <span class="counter">140</span>
         </form>
       </section>
+
+      <section id = "comment-section">
+        <article>
+          <div class = "comment-header">
+            <img src = "./images/profpic.jpeg" alt = "profile-pic">
+            <h2>Handle Name</h2>
+            <p>@handleName</p>
+          </div>
+
+          <div class = "text-container">
+            <p>Comment here</p>
+          </div>
+
+          <div class = "comment-footer">
+            <p>10 days ago</p>
+            <i class = "fab fa-font-awesome-flag"></i>
+            <i class = "fas fa-retweet"></i>
+            <i class = "fas fa-heart"></i>
+          </div>
+
+        </article>
+      </section>
     </main>
+
 
     <!-- App JS -->
     <script type="text/javascript" src="/scripts/app.js"></script>
