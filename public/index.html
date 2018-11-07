@@ -51,8 +51,6 @@
     <script>
       $('form.twitter-form').submit(function (event) {
         event.preventDefault();
-        console.log("test");
-        console.log($(this));
         $.ajax({
           type: 'POST',
           url: 'http://localhost:8080/tweets',

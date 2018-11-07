@@ -4,68 +4,6 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
-const tweetData = [
-  {
-    "user": {
-      "name": "Newton",
-      "avatars": {
-        "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-        "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-        "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-      },
-      "handle": "@SirIsaac"
-    },
-    "content": {
-      "text": "If I have seen further it is by standing on the shoulders of giants"
-    },
-    "created_at": 1461116232227
-  },
-  {
-    "user": {
-      "name": "Descartes",
-      "avatars": {
-        "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-        "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-        "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
-      },
-      "handle": "@rd" },
-    "content": {
-      "text": "Je pense , donc je suis"
-    },
-    "created_at": 1461113959088
-  },
-  {
-    "user": {
-      "name": "Johann von Goethe",
-      "avatars": {
-        "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
-        "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
-        "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
-      },
-      "handle": "@johann49"
-    },
-    "content": {
-      "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
-    },
-    "created_at": 1461113796368
-  }
-];
-
-let loadTweets = () => {
-  let $data = $('form.twitter-form');
-  $data.on('click', function () {
-    console.log("testing the GET request");
-    $.ajax({
-      type: 'GET',
-      url: 'http://localhost:8080/tweets',
-      success: function () {
-
-      }
-    });
-  });
-};
-
-loadTweets();
 
 let createTweetElement = (data) => {
 
@@ -112,7 +50,8 @@ let createTweetElement = (data) => {
     return commentFooter;
   };
 
-  $('section#comment-section').append($('<article>').append(
+// http://api.jquery.com/prepend/ (make most recent appear at the top)
+  $('section#comment-section').prepend($('<article>').append(
     createCommentHeader(),
     createTextContainer(),
     createCommentFooter()
@@ -120,12 +59,29 @@ let createTweetElement = (data) => {
 };
 
 let renderTweets = (data) => {
-  tweetData.forEach(tweet => {
+  data.forEach(tweet => {
     createTweetElement(tweet);
   });
 };
 
-renderTweets(tweetData);
+
+// TWEETS ARE LOADING, BUT THERE IS A DELAY (ask if this is typical?)
+let loadTweets = () => {
+  let $data = $('form.twitter-form');
+  $data.on('submit', function () {
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:8080/tweets',
+      dataType: 'json',
+      success: function(data) {
+        renderTweets(data);
+        $('textarea#submit-tweet').val("");
+        $('span.counter').text("140");
+      }
+    });
+  });
+};
+loadTweets();
 
 // $(document).ready(function () {
 
