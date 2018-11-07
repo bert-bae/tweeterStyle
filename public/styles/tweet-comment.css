@@ -58,14 +58,14 @@ div.comment-footer {
   opacity: 0;
 }
 
-#comment-section:hover article {
+article:hover {
   border: #156d8a solid 0.05em
 }
 
-#comment-section:hover .comment-header {
+article:hover .comment-header {
   opacity: 1;
 }
 
-#comment-section:hover i {
+article:hover i {
   opacity: 1;
 }

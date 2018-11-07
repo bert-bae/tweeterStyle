@@ -51,21 +51,10 @@ const tweetData = [
   }
 ];
 
-
-let createTweetElement = function (tweet) {
-
-  for (let data in tweet) {
-    let user = data.user;
-    let content = data.content;
-    let dateCreated = ((Date.now() - data.created_at) / 86400000).toFixed(0) + " days ago.";
-
-    $('section#comment-section').append($('<article>').append(
-      createCommentHeader(),
-      createTextContainer(),
-      createCommentFooter()
-    ));
-  }
-
+let createTweetElement = function (data) {
+  let user = data.user;
+  let content = data.content;
+  let dateCreated = ((Date.now() - data.created_at) / 86400000).toFixed(0) + " days ago.";
   function createCommentHeader () {
     let commentHeader =
     $('<div>').addClass('comment-header').append(
@@ -89,9 +78,22 @@ let createTweetElement = function (tweet) {
     );
     return commentFooter;
   }
+
+  $('section#comment-section').append($('<article>').append(
+    createCommentHeader(),
+    createTextContainer(),
+    createCommentFooter()
+  ));
 };
 
-createTweetElement(tweetData);
+let renderTweets = function (data) {
+  tweetData.forEach(tweet => {
+    createTweetElement(tweet);
+  });
+};
+
+renderTweets(tweetData);
+
 // $(document).ready(function () {
 
 //   const tweetData = {
