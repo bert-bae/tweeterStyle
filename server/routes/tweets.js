@@ -44,11 +44,12 @@ module.exports = function(DataHelpers) {
     });
   });
 
-  tweetsRoutes.post("/tweets/:tweetid", function (req, res) {
+  tweetsRoutes.post("/:tweetid", function (req, res) {
     if (!req.session.temp) {
       res.status(403).json({ error: 'user needs to be logged in' });
       return;
     }
+    res.send();
   });
 
   return tweetsRoutes;

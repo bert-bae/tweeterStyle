@@ -118,6 +118,19 @@ nav {
   display: none;
 }
 
+.login-prompt {
+  background-color: #f72e2e;
+  border-radius: 0.5em;
+  padding: 0.2em;
+  margin-top: 80px;
+  color: #ffd630;
+  font-size: small;
+  font-weight: bold;
+  text-align: center;
+  display: none;
+  width: 100%;
+}
+
 span i {
   flex: 1;
   order: 1;

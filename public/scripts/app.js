@@ -9,56 +9,50 @@ $(document).ready(function () {
 
 // jQuery UI
 
-  let successfulLogin = () => {
-    $('.login-button').css('display', 'none');
-    $('.register-button').css('display', 'none');
+  let hideAll = () => {
     $('.login-page').hide();
     $('.register-page').hide();
+    $('.login-prompt').hide();
+    $('.new-tweet').hide();
+  };
+
+  let successfulLogin = () => {
+    hideAll();
+    $('.login-button').css('display', 'none');
+    $('.register-button').css('display', 'none');
     $('.login input').val("");
     $('.logout-button').css('display', 'block');
   };
 
   let logout = () => {
+    hideAll();
     $('.login-button').css('display', 'block');
     $('.register-button').css('display', 'block');
-    $('.login-page').hide();
-    $('.register-page').hide();
     $('.register input').val("");
     $('.logout-button').css('display', 'none');
   };
 
   let loginPrompt = () => {
-    $('.new-tweet p').slideDown(500).text("Must be logged in to access!");
+    hideAll();
+    $('.login-prompt').show().text("Must be logged in to access!");
   };
 
   $('.login-button').on('click', function () {
+    hideAll();
     $('.register-page').slideUp(500);
     $('.login-page').slideToggle(500);
   });
 
   $('.register-button').on('click', function () {
+    hideAll();
     $('.login-page').slideUp(500);
     $('.register-page').slideToggle(500);
   });
 
-// must be logged in to access these features
-
   $('.create-comment').on('click', function () {
+    hideAll();
     $('.new-tweet').slideToggle(500);
     $('#submit-tweet').focus();
-  });
-
-  $('#comment-section').on('click','i.fa-font-awesome-flag', function () {
-    $('i.fa-font-awesome-flag').toggleClass('flagged');
-  });
-
-  $('#comment-section').on('click','i.fa-retweet', function () {
-    $('i.fa-retweet').toggleClass('flagged');
-  });
-
-  $('#comment-section').on('click','i.fa-heart', function () {
-    $('i.fa-heart').toggleClass('liked');
-    // $('span.fa-heart').text(1).css("display", "block"); // counter in work
   });
 
 // create comments
@@ -209,7 +203,45 @@ $(document).ready(function () {
     });
   });
 
+  $('#comment-section').on('click','i.fa-font-awesome-flag', function () {
+    $.ajax({
+      type: 'POST',
+      url: 'http://localhost:8080/tweets/:tweetid',
+      success: function () {
+        $('i.fa-font-awesome-flag').toggleClass('flagged');
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        loginPrompt();
+      },
+    });
+  });
 
+  $('#comment-section').on('click','i.fa-retweet', function () {
+    $.ajax({
+      type: 'POST',
+      url: 'http://localhost:8080/tweets/:tweetid',
+      success: function () {
+        $('i.fa-retweet').toggleClass('flagged');
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        loginPrompt();
+      },
+    });
+  });
+
+    // $('span.fa-heart').text(1).css("display", "block"); // counter in work
+  $('#comment-section').on('click','i.fa-heart', function () {
+     $.ajax({
+      type: 'POST',
+      url: 'http://localhost:8080/tweets/:tweetid',
+      success: function () {
+        $('i.fa-heart').toggleClass('liked');
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        loginPrompt();
+      },
+    });
+  });
 
 });
 

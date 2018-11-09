@@ -36,17 +36,26 @@ const db = mongoClient.connect(mongodbURI, function (err, db) {
     db.collection('users').find({email: req.body.email}).toArray((err, users) => {
       if (err) {
         res.status(403).send(err);
+        return;
       }
-      if (users.length === 0) {
+      if (!users.length) {
         res.status(403).send("There is no user associated with this E-Mail.");
+        return;
+      }
+      if (!req.body.email) {
+        res.status(403).send("E-Mail is required.");
+        return;
+      }
+      if (!req.body.password) {
+        res.status(403).send("Password not entered.");
+        return;
       }
       if (!bcrypt.compareSync(req.body.password, users[0].password)) {
         res.status(403).send("Password is incorrect!");
+        return;
       }
-      if (users[0].email === req.body.email && bcrypt.compareSync(req.body.password, users[0].password)) {
-        req.session.temp = users[0].email;
-        res.send("Login successful!");
-      }
+      req.session.temp = users[0].email;
+      res.send("Login successful!");
     });
   });
 
