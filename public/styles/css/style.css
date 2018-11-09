@@ -1,0 +1,335 @@
+/*
+ * http://www.paulirish.com/2012/box-sizing-border-box-ftw/
+ * https://css-tricks.com/international-box-sizing-awareness-day/
+ * Do not modify these two selectors, please
+ */
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/*
+ * Global layout stuff
+ */
+body {
+  margin: 0;
+  color: #244751;
+  background-color: #A9A9A9;
+  /*#eee*/
+  font-family: "Roboto Condensed", sans-serif;
+  width: 100%;
+}
+
+main.container {
+  width: 450px;
+  margin: 0 auto;
+  background-color: white;
+  padding-top: 100px;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-bottom: 0.5em;
+}
+
+p {
+  margin: 0;
+}
+
+/*
+ * Additional CSS can be defined below or in other CSS files, as per instructions
+ */
+img {
+  width: 80px;
+  height: 80px;
+}
+
+nav {
+  position: fixed;
+  height: 80px;
+  width: 100%;
+  background-color: #00a087;
+  color: #e8fdff;
+  padding: 0em 2em;
+  z-index: 2;
+}
+
+#nav-bar .logo {
+  float: left;
+}
+
+#nav-bar .header {
+  float: left;
+  font-size: 2.5rem;
+  padding-left: 10px;
+  line-height: 200%;
+}
+
+#nav-bar .create-comment {
+  float: right;
+  background-color: #eee;
+  border: black solid 0.1em;
+  border-radius: 0.5em;
+  line-height: 150%;
+  display: flex;
+  margin: 10px 10px 0 0;
+  padding: 15px;
+  z-index: 2;
+}
+
+#nav-bar .login-button {
+  float: right;
+  background-color: #eee;
+  border: black solid 0.1em;
+  border-radius: 0.5em;
+  line-height: 150%;
+  margin: 10px 10px 0 0;
+  padding: 15px;
+  z-index: 2;
+  width: 80px;
+  text-align: center;
+}
+
+#nav-bar .register-button {
+  float: right;
+  background-color: #eee;
+  border: black solid 0.1em;
+  border-radius: 0.5em;
+  line-height: 150%;
+  margin-top: 10px;
+  padding: 15px;
+  z-index: 2;
+  width: 80px;
+  text-align: center;
+}
+
+#nav-bar .logout-button {
+  float: right;
+  background-color: #eee;
+  border: black solid 0.1em;
+  border-radius: 0.5em;
+  line-height: 150%;
+  margin: 10px 10px 0 0;
+  padding: 15px;
+  z-index: 2;
+  width: 80px;
+  text-align: center;
+  display: none;
+}
+
+span i {
+  flex: 1;
+  order: 1;
+  color: black;
+  margin: 0.2em;
+}
+
+span p {
+  flex: 2;
+  order: 2;
+  color: #244751;
+}
+
+.create-comment:hover i {
+  font-weight: bold;
+}
+
+.create-comment:hover p {
+  font-weight: bold;
+}
+
+.login-button:hover p {
+  font-weight: bold;
+}
+
+.register-button:hover p {
+  font-weight: bold;
+}
+
+.logout-button:hover p {
+  font-weight: bold;
+}
+
+section.login-page {
+  background-color: #00a087;
+  border: #96b2bb solid 0.05em;
+  border-radius: 0.5em;
+  padding: 60px 80px 10px 80px;
+  width: 100%;
+  margin: 0 auto;
+  position: fixed;
+  z-index: 1;
+  display: none;
+}
+
+section.register-page {
+  background-color: #00a087;
+  border: #96b2bb solid 0.05em;
+  border-radius: 0.5em;
+  padding: 60px 80px 10px 80px;
+  width: 100%;
+  margin: 0 auto;
+  position: fixed;
+  z-index: 1;
+  display: none;
+}
+
+.login-form label {
+  margin: 10px;
+  text-transform: uppercase;
+}
+
+.login-form input {
+  margin-right: 10px;
+  border: #244751 solid 2px;
+  border-radius: 0.5em;
+}
+
+.login-form button {
+  border: gray solid 2px;
+  border-radius: 0.5em;
+}
+
+.login-page p {
+  color: red;
+  margin: 10px;
+  border-radius: 0.5em;
+}
+
+.register-page p {
+  color: red;
+  margin: 10px;
+  border-radius: 0.5em;
+}
+
+section.new-tweet {
+  background-color: #eee;
+  border: #96b2bb solid 0.05em;
+  border-radius: 0.5em;
+  padding: 1em;
+  display: none;
+}
+
+.new-tweet h2 {
+  font-weight: bold;
+  border-bottom: black solid 0.05em;
+  margin-block-end: 0.83em;
+  margin-block-start: 0em;
+}
+
+.new-tweet textarea {
+  overflow: auto;
+  width: 100%;
+  padding: 0.5em;
+}
+
+span.counter {
+  float: right;
+  font-style: italic;
+}
+
+section.new-tweet p {
+  background-color: #f72e2e;
+  border-radius: 0.5em;
+  padding: 0.2em;
+  margin-top: 0.2em;
+  color: #ffd630;
+  font-size: small;
+  font-weight: bold;
+  text-align: center;
+  display: none;
+  width: 100%;
+}
+
+#comment-section article {
+  background-color: #eee;
+  border: #96b2bb solid 0.05em;
+  border-radius: 0.5em;
+  padding-top: 1em;
+  margin: 1.5em 0;
+}
+
+.comment-header {
+  display: flex;
+  padding: 0 1em 0 1em;
+  opacity: 0.5;
+}
+
+.comment-header img {
+  flex: 1;
+  order: 1;
+  width: 15%;
+  height: 15%;
+  border-radius: 0.5em;
+}
+
+.comment-header h2 {
+  order: 2;
+  flex: 3;
+  margin: 0 0 0 0.2em;
+}
+
+.comment-header p {
+  order: 3;
+  flex: 1;
+}
+
+div.text-container {
+  word-break: break-all;
+  order: 3;
+  flex: 1;
+  margin-top: 0.5em;
+  background-color: #FFF;
+  padding: 1.5em 0.5em 1.5em 0.5em;
+  border-top: #d2d2d2 solid 0.05em;
+  border-bottom: #d2d2d2 solid 0.05em;
+}
+
+div.comment-footer {
+  padding: 0.5em;
+  display: flex;
+}
+
+.comment-footer p {
+  font-size: x-small;
+  flex: 12;
+  order: 1;
+}
+
+.comment-footer span {
+  flex: 1;
+  order: 2;
+  opacity: 0;
+}
+
+span.fa-layers-counter {
+  display: none;
+  font-size: xx-small;
+}
+
+article:hover {
+  border: #156d8a solid 0.05em;
+}
+
+article:hover .comment-header {
+  opacity: 1;
+}
+
+article:hover span {
+  opacity: 1;
+}
+
+span i:hover {
+  text-shadow: 1px 1px #000;
+}
+
+.liked {
+  color: red;
+}
+
+.flagged {
+  color: blue;
+}
+
+/*# sourceMappingURL=style.css.map */

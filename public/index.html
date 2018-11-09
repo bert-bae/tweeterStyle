@@ -9,12 +9,7 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,700,700i" rel="stylesheet">
     <!-- App CSS -->
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/login.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/tweet-comment.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/new-tweet.css" type="text/css" />
-
+    <link rel="stylesheet" href="/styles/css/style.css" type="text/css" />
     <!-- External JS -->
     <script type="text/javascript" src="/vendor/jquery-2.2.3.min.js"></script>
 
@@ -25,62 +20,66 @@
     <nav id="nav-bar">
       <img class="logo" src="/images/bird.png">
       <span class="header">Tweeter</span>
-      <span class = "register-button">
+      <span class="register-button">
         <p>Register</p>
       </span>
-      <span class = "login-button">
+      <span class="login-button">
         <p>Login</p>
       </span>
 
-      <span class = "logout-button">
+      <span class="logout-button">
         <p>Logout</p>
       </span>
 
-      <span class = "create-comment">
+      <span class="create-comment">
         <i class="far fa-edit"></i>
         <p>Compose</p>
       </span>
     </nav>
 
     <!-- Page-specific (main) content here -->
-    <section class = "login-page">
-      <div class = "login-header">
+    <section class="login-page">
+      <div class="login-header">
         <h1>Log-in to Tweet</h1>
       </div>
-      <div class = "login-form">
-        <form class = "login" method = "POST">
-          <label>User E-Mail</label><input type = "email" name = "email">
-          <label>Password</label><input type = "password" name = "password">
+      <div class="login-form">
+        <form class="login" method="POST">
+          <label>User E-Mail</label><input type="email" name="email">
+          <label>Password</label><input type="password" name="password">
           <button>Login</button>
         </form>
+      <p></p>
       </div>
     </section>
 
-    <section class = "register-page">
-      <div class = "login-header">
+    <section class="register-page">
+      <div class="login-header">
         <h1>Register your account today!</h1>
       </div>
-      <div class = "login-form">
-        <form class = "register" method = "POST">
-          <label>User E-Mail</label><input type = "email" name = "email">
-          <label>Password</label><input type = "password" name = "password">
+      <div class="login-form">
+        <form class="register" method="POST">
+          <label>Name</label><input type="name" name="name">
+          <label>Handle</label><input type="handle" name="handle">
+          <label>User E-Mail</label><input type="email" name="email">
+          <label>Password</label><input type="password" name="password">
           <button>Register</button>
         </form>
+      <p></p>
       </div>
     </section>
 
     <main class="container">
       <section class="new-tweet">
         <h2>Compose Tweet</h2>
-        <form class = "twitter-form" method = "POST" action = "/tweets">
-          <textarea id = "submit-tweet" name="text" placeholder="What are you humming about?"></textarea>
-          <input class = "tweet-submit" type="submit" value="Tweet" placeholder>
+        <form class="twitter-form" method="POST" action="/tweets">
+          <textarea id="submit-tweet" name="text" placeholder="What are you humming about?"></textarea>
+          <input class="tweet-submit" type="submit" value="Tweet" placeholder>
           <span class="counter">140</span>
           <p></p>
         </form>
       </section>
 
-      <section id = "comment-section">
+      <section id="comment-section">
       </section>
 
     </main>
@@ -89,5 +88,6 @@
     <!-- App JS -->
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
+
   </body>
 </html>

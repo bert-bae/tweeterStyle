@@ -1,0 +1,29 @@
+$borderRadius: 0.5em;
+$textSectionBorder: #96b2bb solid 0.05em;
+
+@mixin navbarDefaults() {
+  float: right;
+  background-color: #eee;
+  border: black solid 0.1em;
+  border-radius: 0.5em;
+  line-height: 150%;
+}
+
+@mixin userVerificationSection() {
+  background-color: #00a087;
+  border: $textSectionBorder;
+  border-radius: $borderRadius;
+  padding: 60px 80px 10px 80px;
+  width: 100%;
+  margin: 0 auto;
+  position: fixed;
+  z-index: 1;
+  display: none;
+}
+
+@mixin errorAlert() {
+ color: red;
+ margin: 10px;
+ border-radius: 0.5em;
+}
+

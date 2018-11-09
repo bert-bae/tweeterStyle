@@ -1,4 +1,4 @@
-// "use strict";
+"use strict";
 
 // Basic express setup:
 
@@ -7,6 +7,7 @@ const express       = require("express");
 const bodyParser    = require("body-parser");
 const app           = express();
 const session       = require('cookie-session');
+const bcrypt        = require('bcrypt');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -33,48 +34,55 @@ const db = mongoClient.connect(mongodbURI, function (err, db) {
   app.post("/login", function(req, res) {
     db.collection('users').find({email: req.body.email}).toArray((err, users) => {
       if (err) {
-        console.log("There was an error: ", err);
-        return;
+        res.status(403).send(err);
       }
       if (users.length === 0) {
-        console.log("There is no user associated with this E-Mail.");
-        return;
+        res.status(403).send("There is no user associated with this E-Mail.");
       }
-      if (users[0].password !== req.body.password) {
-        console.log("Password is incorrect!");
-        return;
+      if (bcrypt.compareSync(req.body.password, users[0].password)) {
+        res.status(403).send("Password is incorrect!");
       }
       if (users[0].email === req.body.email && users[0].password === req.body.password) {
         req.session.temp = users[0].email;
-        console.log("Login successful!");
-        res.send();
+        res.send("Login successful!");
       }
     });
   });
 
 // when you register, create user data
   app.post("/register", function(req, res) {
-    db.collection('users').find({email: req.body.email}).toArray((err, users) => {
-      if (users.length === 0) {
-        let user = {
-          "name" : req.body.email,
-          "email" : req.body.email,
-          "password" : req.body.password,
-          "avatars" : {
-            "regular" : "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-            },
-          "handle" : req.body.email,
-        };
-        db.collection('users').insert(user);
-        req.session.temp = user.email;
-        res.send();
+    //verify existance of unique handle
+    db.collection('users').find({handle: req.body.handle}).toArray((err, users) => {
+      if (err || users.length > 0) {
+        res.status(403).send(err);
       } else {
-        console.log("E-Mail is in use!");
-        return;
+        //verify existance of unique email
+        db.collection('users').find({email: req.body.email}).toArray((err, users) => {
+          if (err || users.length > 0) {
+            res.status(403).send(err);
+          } else {
+            let user = {
+              "name" : req.body.name,
+              "email" : req.body.email,
+              "password" : bcrypt.hashSync(req.body.password, 8),
+              "handle" : req.body.handle,
+              "avatars" : {
+                "regular" : "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
+                },
+            };
+            db.collection('users').insert(user);
+            req.session.temp = user.email;
+            res.send();
+          }
+        });
       }
     });
   });
 
+  app.post("/logout", function(req, res) {
+    req.session = null;
+    res.send();
+  });
 });
 
 app.listen(PORT, () => {

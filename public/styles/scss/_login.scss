@@ -1,0 +1,31 @@
+section.login-page {
+  @include userVerificationSection();
+}
+
+section.register-page {
+  @include userVerificationSection();
+}
+
+.login-form label {
+  margin: 10px;
+  text-transform: uppercase;
+}
+
+.login-form input {
+  margin-right: 10px;
+  border: #244751 solid 2px;
+  border-radius: 0.5em;
+}
+
+.login-form button {
+  border: gray solid 2px;
+  border-radius: $borderRadius;
+}
+
+.login-page p {
+  @include errorAlert();
+}
+
+.register-page p {
+  @include errorAlert();
+}

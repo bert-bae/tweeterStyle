@@ -4,15 +4,28 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 $(document).ready(function () {
-
   let $data = $('form.twitter-form');
   let $textarea = $('textarea#submit-tweet');
 
 // jQuery UI
-  $('.create-comment').on('click', function () {
-    $('.new-tweet').slideToggle(500);
-    $('#submit-tweet').focus();
-  });
+
+  let successfulLogin = () => {
+    $('.login-button').css('display', 'none');
+    $('.register-button').css('display', 'none');
+    $('.login-page').hide();
+    $('.register-page').hide();
+    $('.login input').val("");
+    $('.logout-button').css('display', 'block');
+  };
+
+  let logout = () => {
+    $('.login-button').css('display', 'block');
+    $('.register-button').css('display', 'block');
+    $('.login-page').hide();
+    $('.register-page').hide();
+    $('.register input').val("");
+    $('.logout-button').css('display', 'none');
+  };
 
   $('.login-button').on('click', function () {
     $('.register-page').slideUp(500);
@@ -22,6 +35,13 @@ $(document).ready(function () {
   $('.register-button').on('click', function () {
     $('.login-page').slideUp(500);
     $('.register-page').slideToggle(500);
+  });
+
+// must be logged in to access these features
+
+  $('.create-comment').on('click', function () {
+    $('.new-tweet').slideToggle(500);
+    $('#submit-tweet').focus();
   });
 
   $('#comment-section').on('click','i.fa-font-awesome-flag', function () {
@@ -151,6 +171,10 @@ $(document).ready(function () {
       type: 'POST',
       data: $(this).serialize(),
       url: 'http://localhost:8080/login',
+      success: successfulLogin,
+      error: function(jqXHR, textStatus, errorThrown) {
+        $('.login-page p').slideDown(500).text("E-mail or password is incorrect!").delay(2000).slideUp(500);
+      }
     });
   });
 
@@ -161,6 +185,22 @@ $(document).ready(function () {
       type: 'POST',
       data: $(this).serialize(),
       url: 'http://localhost:8080/register',
+      success: successfulLogin,
+      error: function(jqXHR, textStatus, errorThrown) {
+        $('.register-page p').slideDown(500).text("Credentials are already taken! Try changing your handle or E-Mail").delay(2000).slideUp(500);
+      }
     });
   });
+
+  // when clicking login, send req to route /login
+  $('.logout-button').on('click', function () {
+    event.preventDefault();
+    $.ajax({
+      type: 'POST',
+      url: 'http://localhost:8080/logout',
+      success: logout,
+    });
+  });
+
 });
+
