@@ -27,6 +27,10 @@ $(document).ready(function () {
     $('.logout-button').css('display', 'none');
   };
 
+  let loginPrompt = () => {
+    $('.new-tweet p').slideDown(500).text("Must be logged in to access!");
+  };
+
   $('.login-button').on('click', function () {
     $('.register-page').slideUp(500);
     $('.login-page').slideToggle(500);
@@ -161,6 +165,9 @@ $(document).ready(function () {
       url: 'http://localhost:8080/tweets',
       data: $(this).serialize(),
       success: loadTweets,
+      error: function(jqXHR, textStatus, errorThrown) {
+        loginPrompt();
+      }
     });
   });
 
@@ -201,6 +208,8 @@ $(document).ready(function () {
       success: logout,
     });
   });
+
+
 
 });
 

@@ -5,13 +5,13 @@
 const PORT          = 8080;
 const express       = require("express");
 const bodyParser    = require("body-parser");
-const app           = express();
+const userRoutes    = express();
 const session       = require('cookie-session');
 const bcrypt        = require('bcrypt');
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
-app.use(session({
+userRoutes.use(bodyParser.urlencoded({ extended: true }));
+userRoutes.use(express.static("public"));
+userRoutes.use(session({
   name: 'session',
   keys: ["TEST1", "TEST2"],
 }));
@@ -26,12 +26,13 @@ const db = mongoClient.connect(mongodbURI, function (err, db) {
     return;
   }
   console.log("Connected to tweeter database");
+
   const DataHelpers = require("./lib/data-helpers.js")(db);
   const tweetsRoutes = require("./routes/tweets")(DataHelpers);
-  app.use("/tweets", tweetsRoutes);
+  userRoutes.use("/tweets", tweetsRoutes);
 
 // when you login, retrieve the data based on user E-Mail... WORK IN PROGRESS
-  app.post("/login", function(req, res) {
+  userRoutes.post("/login", function(req, res) {
     db.collection('users').find({email: req.body.email}).toArray((err, users) => {
       if (err) {
         res.status(403).send(err);
@@ -50,7 +51,7 @@ const db = mongoClient.connect(mongodbURI, function (err, db) {
   });
 
 // when you register, create user data
-  app.post("/register", function(req, res) {
+  userRoutes.post("/register", function(req, res) {
     //verify existance of unique handle
     db.collection('users').find({handle: req.body.handle}).toArray((err, users) => {
       if (err || users.length > 0) {
@@ -79,13 +80,13 @@ const db = mongoClient.connect(mongodbURI, function (err, db) {
     });
   });
 
-  app.post("/logout", function(req, res) {
+  userRoutes.post("/logout", function(req, res) {
     req.session = null;
     res.send();
   });
 });
 
-app.listen(PORT, () => {
+userRoutes.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
 // The `data-helpers` module provides an interface to the database of tweets.
