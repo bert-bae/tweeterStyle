@@ -31,30 +31,50 @@ const db = mongoClient.connect(mongodbURI, function (err, db) {
 
 // when you login, retrieve the data based on user E-Mail... WORK IN PROGRESS
   app.post("/login", function(req, res) {
-    db.collection('users').find({name: req.body.email}).toArray((err, users) => {
+    db.collection('users').find({email: req.body.email}).toArray((err, users) => {
+      if (err) {
+        console.log("There was an error: ", err);
+        return;
+      }
       if (users.length === 0) {
         console.log("There is no user associated with this E-Mail.");
         return;
       }
-      req.session.user_id = users[0].name;
+      if (users[0].password !== req.body.password) {
+        console.log("Password is incorrect!");
+        return;
+      }
+      if (users[0].email === req.body.email && users[0].password === req.body.password) {
+        req.session.temp = users[0].email;
+        console.log("Login successful!");
+        res.send();
+      }
     });
-    res.send();
   });
 
 // when you register, create user data
   app.post("/register", function(req, res) {
-    let user = {
-      "name" : req.body.email,
-      "email" : req.body.email,
-      "password" : req.body.password,
-      "avatars" : {
-        "regular" : "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-        },
-      "handle" : req.body.email,
-    };
-    db.collection('users').insert(user);
-    res.send();
+    db.collection('users').find({email: req.body.email}).toArray((err, users) => {
+      if (users.length === 0) {
+        let user = {
+          "name" : req.body.email,
+          "email" : req.body.email,
+          "password" : req.body.password,
+          "avatars" : {
+            "regular" : "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
+            },
+          "handle" : req.body.email,
+        };
+        db.collection('users').insert(user);
+        req.session.temp = user.email;
+        res.send();
+      } else {
+        console.log("E-Mail is in use!");
+        return;
+      }
+    });
   });
+
 });
 
 app.listen(PORT, () => {
