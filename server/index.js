@@ -39,10 +39,10 @@ const db = mongoClient.connect(mongodbURI, function (err, db) {
       if (users.length === 0) {
         res.status(403).send("There is no user associated with this E-Mail.");
       }
-      if (bcrypt.compareSync(req.body.password, users[0].password)) {
+      if (!bcrypt.compareSync(req.body.password, users[0].password)) {
         res.status(403).send("Password is incorrect!");
       }
-      if (users[0].email === req.body.email && users[0].password === req.body.password) {
+      if (users[0].email === req.body.email && bcrypt.compareSync(req.body.password, users[0].password)) {
         req.session.temp = users[0].email;
         res.send("Login successful!");
       }
