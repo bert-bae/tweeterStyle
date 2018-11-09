@@ -10,7 +10,7 @@ nav {
   background-color: #00a087;
   color: #e8fdff;
   padding: 0em 2em;
-  z-index: 1;
+  z-index: 2;
 }
 
 #nav-bar .logo {
@@ -24,9 +24,33 @@ nav {
   line-height: 200%;
 }
 
-#nav-bar span.create-comment {
+#nav-bar .create-comment {
   float: right;
   display: flex;
+  background-color: #eee;
+  border: black solid 0.1em;
+  border-radius: 0.5em;
+  line-height: 150%;
+  margin: 10px 10px 0 0;
+  padding: 15px;
+  z-index: 2;
+}
+
+#nav-bar .login-button {
+  float: right;
+  background-color: #eee;
+  border: black solid 0.1em;
+  border-radius: 0.5em;
+  line-height: 150%;
+  margin: 10px 10px 0 0;
+  padding: 15px;
+  z-index: 2;
+  width: 80px;
+  text-align: center;
+}
+
+#nav-bar .register-button {
+  float: right;
   background-color: #eee;
   border: black solid 0.1em;
   border-radius: 0.5em;
@@ -34,6 +58,8 @@ nav {
   margin-top: 10px;
   padding: 15px;
   z-index: 2;
+  width: 80px;
+  text-align: center;
 }
 
 span i {
@@ -49,10 +75,18 @@ span p {
   color: #244751
 }
 
-span.create-comment:hover i {
+.create-comment:hover i {
   font-weight: bold;
 }
 
-span.create-comment:hover p {
+.create-comment:hover p {
+  font-weight: bold;
+}
+
+.login-button:hover p {
+  font-weight: bold;
+}
+
+.register-button:hover p {
   font-weight: bold;
 }

@@ -54,10 +54,15 @@ div.comment-footer {
   order: 1;
 }
 
-.comment-footer i {
+.comment-footer span {
   flex: 1;
   order: 2;
   opacity: 0;
+}
+
+span.fa-layers-counter {
+  display: none;
+  font-size: xx-small;
 }
 
 article:hover {
@@ -68,6 +73,18 @@ article:hover .comment-header {
   opacity: 1;
 }
 
-article:hover i {
+article:hover span {
   opacity: 1;
+}
+
+span i:hover {
+  text-shadow: 1px 1px #000;
+}
+
+.liked {
+  color: red;
+}
+
+.flagged {
+  color: blue;
 }

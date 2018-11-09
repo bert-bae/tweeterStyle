@@ -7,6 +7,7 @@
 // This is used to make the front-end behaviour a little more
 // realistic even while we use a simplistic "in-memory" db.
 
+// NOT IN USE - MongoDB and async is set
 function someMilliseconds() {
   return Math.floor(Math.random() * 400) + 100;
 }

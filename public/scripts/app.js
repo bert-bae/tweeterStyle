@@ -9,12 +9,36 @@ $(document).ready(function () {
   let $textarea = $('textarea#submit-tweet');
 
 // jQuery UI
-  $('span.create-comment').on('click', function () {
-    $('section.new-tweet').slideToggle(500);
+  $('.create-comment').on('click', function () {
+    $('.new-tweet').slideToggle(500);
+    $('#submit-tweet').focus();
   });
 
+  $('.login-button').on('click', function () {
+    $('.register-page').slideUp(500);
+    $('.login-page').slideToggle(500);
+  });
+
+  $('.register-button').on('click', function () {
+    $('.login-page').slideUp(500);
+    $('.register-page').slideToggle(500);
+  });
+
+  $('#comment-section').on('click','i.fa-font-awesome-flag', function () {
+    $('i.fa-font-awesome-flag').toggleClass('flagged');
+  });
+
+  $('#comment-section').on('click','i.fa-retweet', function () {
+    $('i.fa-retweet').toggleClass('flagged');
+  });
+
+  $('#comment-section').on('click','i.fa-heart', function () {
+    $('i.fa-heart').toggleClass('liked');
+    // $('span.fa-heart').text(1).css("display", "block"); // counter in work
+  });
 
 // create comments
+
   let createTweetElement = (data) => {
 
     let user = data.user;
@@ -53,9 +77,16 @@ $(document).ready(function () {
       let commentFooter =
       $('<div>').addClass('comment-footer').append(
         $('<p>').text(dateCreated),
-        $('<i>').addClass("fab fa-font-awesome-flag"),
-        $('<i>').addClass("fas fa-retweet"),
-        $('<i>').addClass("fas fa-heart")
+        $('<span>').addClass("fa-layers fa-fw").append(
+          $('<i>').addClass("fab fa-font-awesome-flag")
+        ),
+        $('<span>').addClass("fa-layers fa-fw").append(
+          $('<i>').addClass("fas fa-retweet")
+        ),
+        $('<span>').addClass("fa-layers fa-fw").append(
+          $('<i>').addClass("fas fa-heart"),
+          $('<span>').addClass("fa-layers-counter fa-heart")
+        )
       );
       return commentFooter;
     };
@@ -92,16 +123,16 @@ $(document).ready(function () {
   $data.on('submit', function (event) {
     event.preventDefault();
     if ($textarea.val() === "") {
-      $('form.twitter-form p').text("Enter your tweet!");
-      $('form.twitter-form').on('submit', function () {
-        $('form.twitter-form p').slideDown("fast");
+      $('.twitter-form p').text("Enter your tweet!");
+      $('.twitter-form').on('submit', function () {
+        $('.twitter-form p').slideDown("fast");
       });
       return;
     }
     if ($textarea.val().length > 140) {
-      $('form.twitter-form p').text("Max characters allowed is 140!");
-      $('form.twitter-form').on('submit', function () {
-        $('form.twitter-form p').slideDown("fast");
+      $('.twitter-form p').text("Max characters allowed is 140!");
+      $('.twitter-form').on('submit', function () {
+        $('.twitter-form p').slideDown("fast");
       });
       return;
     }
@@ -110,6 +141,15 @@ $(document).ready(function () {
       url: 'http://localhost:8080/tweets',
       data: $(this).serialize(),
       success: loadTweets,
+    });
+  });
+
+  $('.login').on('submit', function () {
+    event.preventDefault();
+    $.ajax({
+      type: 'POST',
+      data: $(this).serialize(),
+      url: 'http://localhost:8080/login',
     });
   });
 
