@@ -20,20 +20,28 @@ const mongoClient = require('mongodb').MongoClient;
 const mongodbURI = "mongodb://localhost:27017/tweeter";
 
 const db = mongoClient.connect(mongodbURI, function (err, db) {
+  if (err) {
+    console.log("There was an err: ", err);
+    return;
+  }
+  console.log("Connected to tweeter database");
   const DataHelpers = require("./lib/data-helpers.js")(db);
   const tweetsRoutes = require("./routes/tweets")(DataHelpers);
   app.use("/tweets", tweetsRoutes);
 
+// when you login, retrieve the data based on user E-Mail... WORK IN PROGRESS
   app.post("/login", function(req, res) {
-
     db.collection('users').find({name: req.body.email}).toArray((err, users) => {
+      if (users.length === 0) {
+        console.log("There is no user associated with this E-Mail.");
+        return;
+      }
       req.session.user_id = users[0].name;
-      // console.log(req);
-      console.log(req.session.user_id);
-      console.log(users[0].name);
     });
+    res.send();
   });
 
+// when you register, create user data
   app.post("/register", function(req, res) {
     let user = {
       "name" : req.body.email,
@@ -45,16 +53,8 @@ const db = mongoClient.connect(mongodbURI, function (err, db) {
       "handle" : req.body.email,
     };
     db.collection('users').insert(user);
-
-    // set the user cookie
-    // and redirect to the same page with login format in CSS
+    res.send();
   });
-});
-
-
-app.get("/login", function(req, res) {
-  // req.session.user_id = "user";
-  res.send('hey what up');
 });
 
 app.listen(PORT, () => {

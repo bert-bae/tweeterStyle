@@ -144,6 +144,7 @@ $(document).ready(function () {
     });
   });
 
+// when clicking login, send req to route /login
   $('.login').on('submit', function () {
     event.preventDefault();
     $.ajax({
@@ -153,4 +154,13 @@ $(document).ready(function () {
     });
   });
 
+// when clicking register, send req to route /register
+  $('.register').on('submit', function () {
+    event.preventDefault();
+    $.ajax({
+      type: 'POST',
+      data: $(this).serialize(),
+      url: 'http://localhost:8080/register',
+    });
+  });
 });
