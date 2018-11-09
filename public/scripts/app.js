@@ -127,6 +127,8 @@ $(document).ready(function () {
   };
 
   // AJAX jQuery
+
+  //load tweets at document laod
   let loadTweets = () => {
     $('form.twitter-form p').slideUp("fast");
     $.ajax({
@@ -174,7 +176,7 @@ $(document).ready(function () {
       url: 'http://localhost:8080/login',
       success: successfulLogin,
       error: function(jqXHR, textStatus, errorThrown) {
-        $('.login-page p').slideDown(500).text("E-mail or password is incorrect!").delay(2000).slideUp(500);
+        $('.login-page p').slideDown(500).text("E-mail and/or password is incorrect!").delay(2000).slideUp(500);
       }
     });
   });
@@ -229,13 +231,13 @@ $(document).ready(function () {
     });
   });
 
-    // $('span.fa-heart').text(1).css("display", "block"); // counter in work
   $('#comment-section').on('click','i.fa-heart', function () {
      $.ajax({
       type: 'POST',
       url: 'http://localhost:8080/tweets/:tweetid',
       success: function () {
         $('i.fa-heart').toggleClass('liked');
+        $('span.fa-heart').text(1).css("display", "block"); // counter in work
       },
       error: function(jqXHR, textStatus, errorThrown) {
         loginPrompt();
