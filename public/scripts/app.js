@@ -237,7 +237,7 @@ $(document).ready(function () {
       url: 'http://localhost:8080/tweets/:tweetid',
       success: function () {
         $('i.fa-heart').toggleClass('liked');
-        $('span.fa-heart').text(1).css("display", "block"); // counter in work
+        // $('span.fa-heart').text(1).css("display", "block"); // counter in work
       },
       error: function(jqXHR, textStatus, errorThrown) {
         loginPrompt();
