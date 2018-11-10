@@ -118,6 +118,7 @@ $(document).ready(function () {
   };
 
   let renderTweets = (data) => {
+    console.log(data);
     $('section#comment-section').empty();
     data.forEach(tweet => {
       createTweetElement(tweet);
@@ -134,6 +135,7 @@ $(document).ready(function () {
     $.ajax({
       type: 'GET',
       url: 'http://localhost:8080/tweets',
+      data: $(this).serialize(),
       dataType: 'json',
       success: renderTweets,
     });
