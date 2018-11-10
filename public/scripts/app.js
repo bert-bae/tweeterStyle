@@ -50,7 +50,9 @@ $(document).ready(function () {
   });
 
   $('.create-comment').on('click', function () {
-    hideAll();
+    $('.login-page').hide();
+    $('.register-page').hide();
+    $('.login-prompt').hide();
     $('.new-tweet').slideToggle(500);
     $('#submit-tweet').focus();
   });
@@ -164,6 +166,7 @@ $(document).ready(function () {
       data: $(this).serialize(),
       success: loadTweets,
       error: function(jqXHR, textStatus, errorThrown) {
+        console.log("test");
         loginPrompt();
       }
     });
