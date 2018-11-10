@@ -38,13 +38,13 @@ $(document).ready(function () {
   };
 
   $('.login-button').on('click', function () {
-    hideAll();
+    $('.login-prompt').hide();
     $('.register-page').slideUp(500);
     $('.login-page').slideToggle(500);
   });
 
   $('.register-button').on('click', function () {
-    hideAll();
+    $('.login-prompt').hide();
     $('.login-page').slideUp(500);
     $('.register-page').slideToggle(500);
   });

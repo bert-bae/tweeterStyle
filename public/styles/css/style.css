@@ -41,13 +41,13 @@ p {
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */
 img {
-  width: 80px;
-  height: 80px;
+  max-width: 80px;
+  max-height: 80px;
 }
 
 nav {
   position: fixed;
-  height: 80px;
+  max-height: 80px;
   width: 100%;
   background-color: #00a087;
   color: #e8fdff;
@@ -87,7 +87,7 @@ nav {
   margin: 10px 10px 0 0;
   padding: 15px;
   z-index: 2;
-  width: 80px;
+  max-width: 80px;
   text-align: center;
 }
 
@@ -100,7 +100,7 @@ nav {
   margin-top: 10px;
   padding: 15px;
   z-index: 2;
-  width: 80px;
+  max-width: 80px;
   text-align: center;
 }
 
@@ -113,7 +113,7 @@ nav {
   margin: 10px 10px 0 0;
   padding: 15px;
   z-index: 2;
-  width: 80px;
+  max-width: 80px;
   text-align: center;
   display: none;
 }
@@ -343,6 +343,12 @@ span i:hover {
 
 .flagged {
   color: blue;
+}
+
+@media (max-width: 650px) {
+  main.container {
+    width: 80%;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
