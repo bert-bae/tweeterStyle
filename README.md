@@ -38,6 +38,15 @@ This repository is the starter code for the project: Students will fork and clon
   * Duplicate handle name and e-mail will prevent registration.
 5. Database maintained via MongoDB.
 
+## Screenshots
+
+!["Main page"](https://github.com/bert-bae/tweeterStyle/blob/master/screenshots/main.png)
+!["Toggle login area"](https://github.com/bert-bae/tweeterStyle/blob/master/screenshots/login.png)
+!["Toggle register area"](https://github.com/bert-bae/tweeterStyle/blob/master/screenshots/register.png)
+!["Create tweets!"](https://github.com/bert-bae/tweeterStyle/blob/master/screenshots/compose-tweet.png)
+!["Example"](https://github.com/bert-bae/tweeterStyle/blob/master/screenshots/example.png)
+!["Example 2"](https://github.com/bert-bae/tweeterStyle/blob/master/screenshots/example2.png)
+
 ## Security
 
 Password is encrypted using bcrypt.
