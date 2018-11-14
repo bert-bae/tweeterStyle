@@ -18,6 +18,7 @@ userRoutes.use(session({
 
 // The in-memory database of tweets. It's a basic object with an array in it.
 const mongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectID;
 const mongodbURI = "mongodb://localhost:27017/tweeter";
 
 const db = mongoClient.connect(mongodbURI, function (err, db) {
@@ -28,8 +29,6 @@ const db = mongoClient.connect(mongodbURI, function (err, db) {
   console.log("Connected to tweeter database");
 
   const DataHelpers = require("./lib/data-helpers.js")(db);
-  const tweetsRoutes = require("./routes/tweets")(DataHelpers);
-  userRoutes.use("/tweets", tweetsRoutes);
 
 // when you login, retrieve the data based on user E-Mail... WORK IN PROGRESS
   userRoutes.post("/login", function(req, res) {
@@ -54,7 +53,7 @@ const db = mongoClient.connect(mongodbURI, function (err, db) {
         res.status(403).send("Password is incorrect!");
         return;
       }
-      req.session.temp = users[0].email;
+      req.session.temp = users[0]._id;
       res.send("Login successful!");
     });
   });
@@ -81,18 +80,87 @@ const db = mongoClient.connect(mongodbURI, function (err, db) {
                 },
             };
             db.collection('users').insert(user);
-            req.session.temp = user.email;
-            res.send();
+            db.collection('users').find({email: req.body.email}).toArray((err, users) => {
+              req.session.temp = users[0]._id;
+              res.send();
+            });
           }
         });
       }
     });
   });
 
+  userRoutes.get("/main", function(req, res) {
+    db.collection('tweets').find().toArray((err, tweets) => {
+      DataHelpers.getTweets((err, tweets) => {
+        if (err) {
+          res.status(500).json({ error: err.message });
+        } else {
+          res.json(tweets);
+        }
+      });
+    });
+  });
+
+  userRoutes.post("/", function(req, res) {
+    let objId = new ObjectId(req.session.temp);
+    db.collection('users').find({"_id": objId}).toArray((err, users) => {
+      if (err) {
+        console.log("Error occurred on user verification: ", err);
+        return;
+      }
+      if (!req.session.temp) {
+        res.status(403).json({ error: 'user needs to be logged in' });
+        return;
+      }
+      if (!req.body.text) {
+        res.status(400).json({ error: 'invalid request: no data in POST body'});
+        return;
+      }
+
+      const user = users[0];
+      const tweet = {
+        userid: user._id,
+        user: {
+          name: user.name,
+          handle: user.handle,
+          avatars: {
+            small: "https://vanillicon.com/9fca3508bf15c5568642398bee9e777b_50.png",
+            regular: "https://vanillicon.com/9fca3508bf15c5568642398bee9e777b.png",
+            large: "https://vanillicon.com/9fca3508bf15c5568642398bee9e777b_200.png",
+          },
+        },
+        content: {
+          text: req.body.text,
+        },
+        "created_at": Date.now(),
+      };
+      db.collection('tweets').insert(tweet);
+      res.send();
+    });
+  });
+
   userRoutes.post("/logout", function(req, res) {
     req.session = null;
     res.send();
+    return;
   });
+
+  userRoutes.post("/:tweetid", function (req, res) {
+    let objId = new ObjectId(req.session.temp);
+    db.collection('users').find({"_id": objId}).toArray((err, users) => {
+      if (!req.session.temp) {
+        res.status(403).json({ error: 'user needs to be logged in' });
+        return;
+      }
+      if (req.session.temp === DATA-USERID-OF-THE-DOM-ELEMENT) {
+        res.status(405).json({ error: 'cannot like own tweets' });
+        return;
+      }
+      res.send();
+    });
+  });
+
 });
 
 userRoutes.listen(PORT, () => {

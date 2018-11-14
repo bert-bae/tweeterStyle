@@ -37,6 +37,11 @@ $(document).ready(function () {
     $('.login-prompt').show().text("Must be logged in to access!");
   };
 
+  let userRestriction = () => {
+    hideAll();
+    $('.login-prompt').show().text("You cannot like your own tweets you narcissist...");
+  };
+
   $('.login-button').on('click', function () {
     $('.login-prompt').hide();
     $('.register-page').slideUp(500);
@@ -94,16 +99,17 @@ $(document).ready(function () {
       return textContainer;
     };
     const createCommentFooter = () => {
+      console.log(data.userid);
       let commentFooter =
       $('<div>').addClass('comment-footer').append(
         $('<p>').text(dateCreated),
-        $('<span>').addClass("fa-layers fa-fw").append(
+        $('<span>').addClass("fa-layers fa-fw").attr('data-userid', data.userid).append(
           $('<i>').addClass("fab fa-font-awesome-flag")
         ),
-        $('<span>').addClass("fa-layers fa-fw").append(
+        $('<span>').addClass("fa-layers fa-fw").attr('data-userid', data.userid).append(
           $('<i>').addClass("fas fa-retweet")
         ),
-        $('<span>').addClass("fa-layers fa-fw").append(
+        $('<span>').addClass("fa-layers fa-fw").attr('data-userid', data.userid).append(
           $('<i>').addClass("fas fa-heart"),
           $('<span>').addClass("fa-layers-counter fa-heart")
         )
@@ -120,7 +126,6 @@ $(document).ready(function () {
   };
 
   let renderTweets = (data) => {
-    console.log(data);
     $('section#comment-section').empty();
     data.forEach(tweet => {
       createTweetElement(tweet);
@@ -136,7 +141,7 @@ $(document).ready(function () {
     $('form.twitter-form p').slideUp("fast");
     $.ajax({
       type: 'GET',
-      url: 'http://localhost:8080/tweets',
+      url: 'http://localhost:8080/main',
       data: $(this).serialize(),
       dataType: 'json',
       success: renderTweets,
@@ -162,11 +167,10 @@ $(document).ready(function () {
     }
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:8080/tweets',
+      url: 'http://localhost:8080',
       data: $(this).serialize(),
       success: loadTweets,
       error: function(jqXHR, textStatus, errorThrown) {
-        console.log("test");
         loginPrompt();
       }
     });
@@ -213,12 +217,16 @@ $(document).ready(function () {
   $('#comment-section').on('click','i.fa-font-awesome-flag', function () {
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:8080/tweets/:tweetid',
+      url: 'http://localhost:8080/:tweetid',
       success: function () {
         $('i.fa-font-awesome-flag').toggleClass('flagged');
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        loginPrompt();
+        if (errorThrown === "Forbidden") {
+          loginPrompt();
+        } else if (errorThrown === "Method Not Allowed") {
+          userRestriction();
+        }
       },
     });
   });
@@ -226,12 +234,16 @@ $(document).ready(function () {
   $('#comment-section').on('click','i.fa-retweet', function () {
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:8080/tweets/:tweetid',
+      url: 'http://localhost:8080/:tweetid',
       success: function () {
         $('i.fa-retweet').toggleClass('flagged');
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        loginPrompt();
+        if (errorThrown === "Forbidden") {
+          loginPrompt();
+        } else if (errorThrown === "Method Not Allowed") {
+          userRestriction();
+        }
       },
     });
   });
@@ -239,13 +251,17 @@ $(document).ready(function () {
   $('#comment-section').on('click','i.fa-heart', function () {
      $.ajax({
       type: 'POST',
-      url: 'http://localhost:8080/tweets/:tweetid',
+      url: 'http://localhost:8080/:tweetid',
       success: function () {
         $('i.fa-heart').toggleClass('liked');
         // $('span.fa-heart').text(1).css("display", "block"); // counter in work
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        loginPrompt();
+        if (errorThrown === "Forbidden") {
+          loginPrompt();
+        } else if (errorThrown === "Method Not Allowed") {
+          userRestriction();
+        }
       },
     });
   });
